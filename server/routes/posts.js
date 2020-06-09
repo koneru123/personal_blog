@@ -74,6 +74,7 @@ router.patch(
    passport.authenticate("jwt", { session: false }),
    (req, res) => {
       const author = req.user.user_name;
+      console.log('Priyaaaaaaaaaa', req.body);
       const { errors, isValid } = validatePostInput(req.body);
       //console.log(isValid);
       if (!isValid) {

@@ -55,14 +55,20 @@ const ShowBlogs = () => {
 
     const renderBlogs = () => {
         return blogs.map((blog, idx) => {
-            return (<Link to="/id"><li key={'blog-'+idx}> 
-                <div className="blogCard">
-                    <div className="blogTitle">{blog.title}</div> 
-                    <div className="blogDate">
-                        <span>Posted On:</span>{blog.date}
+            return (
+                <Link to={{
+                        pathname: "/id",
+                        blogInfo: blog
+                    }}>
+                    <li key={'blog-'+idx}> 
+                    <div className="blogCard">
+                        <div className="blogTitle">{blog.title}</div> 
+                        <div className="blogDate">
+                            <span>Posted On:</span>{blog.date}
+                        </div>
                     </div>
-                </div>
-            </li></Link>
+                    </li>
+                </Link>
             )
         });
     }

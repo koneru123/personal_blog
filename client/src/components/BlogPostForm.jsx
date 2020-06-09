@@ -54,17 +54,24 @@ const FormContainer = styled.div`
     }
 `;
 
-const BlogPostForm = () => {
+const BlogPostForm = ({blogInfo}) => {
+    //debugger;
     const history = useHistory();
     const [initialObject, setInitialObject] = useState({
         title: '',
         body: ''
     });
+    const [_blogInfo, setBlogInfo] = useState(blogInfo);
 
     const handleInputChange = (event) => {
+        event.preventDefault();
         const { name, value } = event && event.target;
         setInitialObject({
             ...initialObject,
+            [name]: value
+        });
+        setBlogInfo({
+            ..._blogInfo,
             [name]: value
         });
     };
@@ -85,6 +92,24 @@ const BlogPostForm = () => {
         .catch(err => console.error(err))
     };
 
+    const updatePost = (event) => {
+        const { _id } = blogInfo;
+        event.preventDefault();
+        axios.patch(`/api/posts/update/${_id}`, 
+            qs.stringify(_blogInfo),
+            { 
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': localStorage.getItem('authToken')
+                }
+            }
+        )
+        .then(res => {
+            history.push('/blog');
+        })
+        .catch(err => console.error(err))
+    }
+
     return (
         <BlogPostFormContainer>
             <div className="BlogContainer">
@@ -92,15 +117,29 @@ const BlogPostForm = () => {
                      <form>
                         <div className="title">
                             <label>Title </label>
-                            <input type="title" name="title" onChange={handleInputChange}></input>
+                            <input 
+                                type="title" 
+                                name="title" 
+                                onChange={handleInputChange} 
+                                value={_blogInfo && _blogInfo.title} />
                         </div>
                         <div className="description">
                             <label>Description </label>
-                            <input type="description" name="body" onChange={handleInputChange}></input>
+                            <input 
+                                type="description" 
+                                name="body" 
+                                onChange={handleInputChange}
+                                value={_blogInfo && _blogInfo.body}/>
                         </div>
+                        {blogInfo && blogInfo.title && blogInfo.body ? 
+                        <div className="postFormUpdate">
+                            <button onClick={updatePost}>Submit</button>
+                        </div>
+                        :  
                         <div className="postFormSubmit">
                             <button onClick={createPost}>Submit</button>
-                        </div>
+                        </div>}
+                       
                      </form>
                  </FormContainer>
             </div>

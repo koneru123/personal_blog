@@ -42,7 +42,10 @@ class App extends React.Component {
                             Blog and Vlog
                         </div>
                         <div className="navBarBtn">
-                            <button><Link to="/login">Login</Link></button>
+                            <button><Link to="/login">
+                                    {localStorage.getItem('authToken') === true ? 'Login' : 'Logout'}
+                                </Link>
+                            </button>
                         </div>
                     </Nav>
                 </div>
@@ -51,8 +54,21 @@ class App extends React.Component {
                     <Route path="/login" component={LoginForm}/>
                     <Route path="/signup" component={SignupForm}/>
                     <Route path="/blog" component={ShowBlogs}/>
-                    <Route path="/post/create" component={BlogPostForm}/> 
-                    <Route path="/id" component={IndividualBlog}/> 
+                    <Route 
+                        path="/post/create" 
+                        render={({location}) => {
+                            //debugger;
+                            const blogInfo = location && location.blogInfo || null;
+                            return <BlogPostForm blogInfo={blogInfo} />
+                        }}
+                    />
+                    <Route 
+                        path="/id" 
+                        render={({location}) => {
+                            const {blogInfo} = location;
+                            return <IndividualBlog blogInfo={blogInfo} />
+                        }}
+                    />
                 </Switch>
             </Router>
         );       

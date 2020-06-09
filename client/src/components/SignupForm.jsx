@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import LoginForm from './LoginForm.jsx';
+import axios from 'axios';
 
 const SignUpFormContainer = styled.div`
     display: flex;
@@ -52,11 +53,30 @@ const SignUpContainer = styled.div`
     }
 `;
 
-const handleInputChange = () => {
-    console.log('clicked');
-}
-
 const SignupForm = () => {
+    const history = useHistory();
+    const [initialObject, setInitialObject] = useState({
+        user_name: '',
+        email: '',
+        password: ''
+    });
+    const handleInputChange = (event) => {
+        const { name, value } = event && event.target;  
+        setInitialObject({
+            ...initialObject,
+            [name]: value
+        });
+    };
+    const submitForm = (event) => {
+        event.preventDefault();
+        axios.post('api/users/signup', initialObject)
+        .then(res => {
+            // console.log(res)
+            const { data } = res;
+            history.push('/login');
+        })
+        .catch(err => console.err(err))
+    }
     return (
         <SignUpFormContainer>
             <SignUpContainer>
@@ -65,18 +85,18 @@ const SignupForm = () => {
                 </div>
                 <div className="username">
                     <label>Username </label>
-                    <input type="username" id="username" onChange={handleInputChange}></input>
+                    <input type="username" name="user_name" id="username" onChange={handleInputChange}></input>
                 </div>
                 <div className="email">
                     <label>Email </label>
-                    <input type="email" id="email"></input>
-                </div>
+                    <input type="email" id="email" name="email" onChange={handleInputChange}></input>
+                </div> 
                 <div className="password">
                     <label>Password </label>
-                    <input type="password" id="password"></input>
+                    <input type="password" id="password" name="password" onChange={handleInputChange}></input>
                 </div>
                 <div className="submitBtn">
-                    <button>Submit</button>
+                    <button onClick={submitForm}>Submit</button>
                     <p>Do you have an account already? <Link to={'/login'}>click here</Link></p>
                 </div>
             </SignUpContainer>

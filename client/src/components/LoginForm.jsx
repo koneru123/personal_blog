@@ -67,7 +67,7 @@ const LoginForm = () => {
     //console.log(initialObject);
     const submitForm = (event) => {
         event.preventDefault();
-        console.log(initialObject);
+        //console.log(initialObject);
         axios.post('api/users/login', initialObject)
         .then(res => {
             // console.log(res)
@@ -78,7 +78,7 @@ const LoginForm = () => {
                 history.push('/blog');
             }
         })
-        .catch(err => console.err(err))
+        .catch(err => console.error(err))
     }
     return (
             <LoginFormContainer>
