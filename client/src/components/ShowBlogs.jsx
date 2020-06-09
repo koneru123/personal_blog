@@ -24,7 +24,8 @@ const UnorderedList = styled.ul`
         .blogTitle {
             display: block;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
         }
         .blogDate {
             display: block;
@@ -54,14 +55,14 @@ const ShowBlogs = () => {
 
     const renderBlogs = () => {
         return blogs.map((blog, idx) => {
-            return (<li key={'blog-'+idx}> 
+            return (<Link to="/id"><li key={'blog-'+idx}> 
                 <div className="blogCard">
                     <div className="blogTitle">{blog.title}</div> 
                     <div className="blogDate">
                         <span>Posted On:</span>{blog.date}
                     </div>
                 </div>
-            </li>
+            </li></Link>
             )
         });
     }
