@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router(); 
 require("dotenv").config();
+// library used to hash the user’s password before storing it in a database.
 const bcrypt = require("bcryptjs");
+// generates web tokens as string, used for authenticating the user
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET; 
 const validateSignUpInput = require("../validation/signup");
@@ -26,6 +28,7 @@ router.post("/signup", (req, res) => {
        } else {
           const newUser = new User({ user_name, email, password });
           // hashing password before storing it in database
+          // https://www.npmjs.com/package/bcrypt
           bcrypt.genSalt(10, (err, salt) => {
              bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) throw err;
@@ -43,6 +46,7 @@ router.post("/signup", (req, res) => {
  });
 
  router.post("/login", (req, res) => {
+    debugger;
     const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid) {
        return res.status(400).json(errors);
@@ -53,6 +57,7 @@ router.post("/signup", (req, res) => {
           return res.status(404).json({ email: "Email not found" });
        }
  
+      // Load hash from your password DB.
        bcrypt.compare(password, user.password).then(isMatch => {
           if (isMatch) {
              const payload = {

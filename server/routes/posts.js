@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../../database/models/Post");
+// Passport is Express-compatible authentication middleware for Node.js.
+// authenticate requests
 const passport = require("passport");
 const validatePostInput = require("../validation/post");
 
@@ -9,6 +11,7 @@ const validatePostInput = require("../validation/post");
 passport.authenticate('jwt', {session:false});
 
 // Fetch all the posts
+// This is a private route
 router.get(
    "/",
    passport.authenticate("jwt", { session: false }),
@@ -43,6 +46,7 @@ router.get("/author/:author", (req, res) => {
 });
 
 // Create the post
+// This is a private route
 router.post(
    "/create",
    passport.authenticate("jwt", { session: false }),
@@ -63,6 +67,7 @@ router.post(
 );
 
 // Update the post
+// This is a private route
 router.patch(
    "/update/:id",
    passport.authenticate("jwt", { session: false }),
@@ -87,6 +92,7 @@ router.patch(
 );
 
 // Delete the post
+// This is a private route
 router.delete(
    "/delete/:id",
    passport.authenticate("jwt", { session: false }),

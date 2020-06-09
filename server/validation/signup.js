@@ -1,4 +1,7 @@
+// Using validator library to check for valid email, password
 const Validator = require("validator");
+
+// Using isEmpty library to check if the value is empty
 const isEmpty = require("is-empty");
 
 module.exports = validateSignUpInput = data => {
