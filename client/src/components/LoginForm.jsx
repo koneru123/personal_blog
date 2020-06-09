@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SignUpForm from './SignupForm.jsx'
 import axios from 'axios';
 
@@ -52,6 +52,7 @@ const FormContainer = styled.div`
 `;
 
 const LoginForm = () => {
+    const history = useHistory();
     const [initialObject, setInitialObject] = useState({
         email: '',
         password: ''
@@ -64,10 +65,19 @@ const LoginForm = () => {
         });
     };
     //console.log(initialObject);
-    const submitForm = () => {
+    const submitForm = (event) => {
+        event.preventDefault();
         console.log(initialObject);
-        axios.post('/login', initialObject)
-        .then(res => console.log(res))
+        axios.post('api/users/login', initialObject)
+        .then(res => {
+            // console.log(res)
+            const { data } = res;
+            const { token } = data;
+            if (token) {
+                localStorage.setItem('authToken', token);
+                history.push('/blog');
+            }
+        })
         .catch(err => console.err(err))
     }
     return (
@@ -85,7 +95,7 @@ const LoginForm = () => {
                         <input type="password" name="password" onChange={handleInputChange}></input>
                     </div>
                     <div className="submitBtn">
-                        <button type="submit" onClick={submitForm}><Link to={'/blog'}>Submit</Link></button>
+                        <button type="submit" onClick={submitForm}>Submit</button>
                         <p>Don't have an account? You can create one, <Link to={'/signup'}>click here</Link></p>
                     </div>
                 </FormContainer>

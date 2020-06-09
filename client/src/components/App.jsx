@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import LoginForm from './LoginForm.jsx';
 import SignupForm from './SignupForm.jsx';
 import BlogPostForm from './BlogPostForm.jsx';
+import ShowBlogs from './ShowBlogs.jsx';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
 const Nav = styled.nav`
@@ -48,7 +49,8 @@ class App extends React.Component {
                     <Route exact path="/" component={LoginForm}/>
                     <Route path="/login" component={LoginForm}/>
                     <Route path="/signup" component={SignupForm}/>
-                    <Route path="/blog" component={BlogPostForm}/>
+                    <Route path="/blog" component={ShowBlogs}/>
+                    <Route path="/post/create" component={BlogPostForm}/> 
                 </Switch>
             </Router>
         );       

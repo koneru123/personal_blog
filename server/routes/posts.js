@@ -51,6 +51,7 @@ router.post(
    "/create",
    passport.authenticate("jwt", { session: false }),
    (req, res) => {
+      console.log('Priya',req.body);
       const author = req.user.user_name;
       const post = req.body;
       const { errors, isValid } = validatePostInput(post);

@@ -5,9 +5,11 @@ const Validator = require("validator");
 const isEmpty = require("is-empty");
 
 module.exports = validatePostInput = data => {
+   //console.log(data);
    let errors = {};
 
    let { title, body } = data;
+   console.log(title, body);
    // Converting empty fields to empty string as validator function works only with strings
    title = !isEmpty(title) ? title : "";
    body = !isEmpty(body) ? body : "";
