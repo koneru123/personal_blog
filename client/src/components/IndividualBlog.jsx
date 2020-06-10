@@ -3,11 +3,16 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Moment from 'moment';
 
 const IndividualBlogContainer = styled.div`
+    background-image: url("./background4.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: white;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    height: 600px;
     .title {
         text-align: center;
         display: block;
@@ -36,6 +41,8 @@ const IndividualBlogContainer = styled.div`
 
 const IndividualBlog = ({blogInfo}) => {
     const { _id, title, body, author, date } = blogInfo;
+    const blogdate = Date(date);
+    const formattedDate = Moment(blogdate).format("LL");
     //debugger;
     const history = useHistory();
     const handleDeleteClick = () => {
@@ -59,7 +66,7 @@ const IndividualBlog = ({blogInfo}) => {
                 </div>
                 <div className="createdDate">
                     <div>Created by: {author}</div>
-                    <div>{date}</div>
+                    <div>{formattedDate}</div>
                 </div>
                 <div className="updateDeleteBtns">
                     <span className="editBtn"><Link to={{                   

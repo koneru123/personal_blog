@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Moment from 'moment';
+
+const ShowBlogsContainer = styled.div`
+
+`;
 
 const BlogBtn = styled.div`
     display: flex;
@@ -54,7 +59,9 @@ const ShowBlogs = () => {
     }, []);
 
     const renderBlogs = () => {
-        return blogs.map((blog, idx) => {
+        return blogs.map((blog, idx) => { 	
+            const date = Date(blog.date);
+            const formattedDate = Moment(date).format("LL");
             return (
                 <Link to={{
                         pathname: "/id",
@@ -64,7 +71,7 @@ const ShowBlogs = () => {
                     <div className="blogCard">
                         <div className="blogTitle">{blog.title}</div> 
                         <div className="blogDate">
-                            <span>Posted On:</span>{blog.date}
+                            <span>Posted On: </span>{formattedDate}
                         </div>
                     </div>
                     </li>
@@ -73,12 +80,14 @@ const ShowBlogs = () => {
         });
     }
     return (
-        <>
+        <ShowBlogsContainer>
             <BlogBtn className="createBlogBtn"><button><Link to="/post/create">Create a blog post</Link></button></BlogBtn>
             <UnorderedList className="blogsList">
                 { renderBlogs() }
             </UnorderedList>
-        </>
+        </ShowBlogsContainer>
+            
+
     )
 }
 

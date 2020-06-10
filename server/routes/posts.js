@@ -28,7 +28,7 @@ router.get(
 
 // Fetch individiual post by id
 router.get("/post/:id", (req, res) => {
-    console.log(req.params.id);
+    //console.log(req.params.id);
    Post.find({ _id: req.params.id })
       .then(post => res.status(200).json(post))
       .catch(err => res.status(400).json({ id: "Error fetching post by id" }));
@@ -51,7 +51,7 @@ router.post(
    "/create",
    passport.authenticate("jwt", { session: false }),
    (req, res) => {
-      console.log('Priya',req.body);
+      //console.log('Priya',req.body);
       const author = req.user.user_name;
       const post = req.body;
       const { errors, isValid } = validatePostInput(post);
@@ -74,7 +74,7 @@ router.patch(
    passport.authenticate("jwt", { session: false }),
    (req, res) => {
       const author = req.user.user_name;
-      console.log('Priyaaaaaaaaaa', req.body);
+      //console.log('Priyaaaaaaaaaa', req.body);
       const { errors, isValid } = validatePostInput(req.body);
       //console.log(isValid);
       if (!isValid) {

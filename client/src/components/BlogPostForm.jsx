@@ -52,6 +52,11 @@ const FormContainer = styled.div`
         margin-top: 20px;
         font-size: 12px;
     }
+    .postFormUpdate button {
+        padding: 10px;
+        margin-top: 20px;
+        font-size: 12px;
+    }
 `;
 
 const BlogPostForm = ({blogInfo}) => {
