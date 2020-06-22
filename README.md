@@ -1,9 +1,20 @@
-# personal_blog
+Setup
+-----
 
-This is my personal blogging application
+Full Stack Document Management Application
 
-Technologies Used:-
+Install all the dependencies
+-----
+run ```npm install```
 
-Front-End :- React, Redux
-Server:- Node, Express
-Database:- MongoDB, Mongoose
+Start server
+------------
+run ```npm run react-server```
+
+Start webpack
+------------
+run ```npm run react-client```
+
+
+
+
